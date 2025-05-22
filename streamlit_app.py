@@ -79,7 +79,7 @@ if page == "📝 New Job":
                     "days": days,
                     "posts": posts
                 }
-                job_response = requests.post(f"{API_BASE}/create", json=job_payload)
+                job_response = requests.post(f"{API_BASE}/jobs/create", json=job_payload)
                 if job_response.status_code == 200:
                     st.success("✅ Job created and posts scheduled.")
                 else:

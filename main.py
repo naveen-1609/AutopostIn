@@ -9,7 +9,7 @@ app = FastAPI()
 
 app.include_router(linkedin_router)
 app.include_router(posts_router)
-app.include_router(jobs_router)
+app.include_router(jobs_router, prefix="/jobs")
 @app.get("/", response_class=HTMLResponse)
 def home():
     return """
