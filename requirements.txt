@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+httpx
+firebase-admin
+pydantic
+apscheduler
+python-dotenv
+openai
+apache-airflow
