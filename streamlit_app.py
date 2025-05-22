@@ -7,8 +7,8 @@ st.set_page_config(page_title="AutopostIn Dashboard", layout="centered")
 
 # --------- Session Setup ----------
 query_params = st.query_params
-user_id = query_params.get("user_id", [None])[0]
-name = query_params.get("name", [""])
+user_id = query_params.get("user_id", [None])
+name = query_params.get("name", [""])[0]
 
 if user_id and "user_id" not in st.session_state:
     st.session_state.user_id = user_id
@@ -60,6 +60,7 @@ if page == "📝 New Job":
                 gen_payload["days"] = days
 
             gen_response = requests.post(f"{API_BASE}/generate", json=gen_payload)
+            st.write("🪪 Current User ID:", st.session_state.get("user_id"))
             if gen_response.status_code == 200:
                 posts = gen_response.json()["posts"]
                 for post in posts:
@@ -79,7 +80,7 @@ if page == "📝 New Job":
                     "days": days,
                     "posts": posts
                 }
-                job_response = requests.post(f"{API_BASE}/jobs/create", json=job_payload)
+                job_response = requests.post(f"{API_BASE}/create", json=job_payload)
                 if job_response.status_code == 200:
                     st.success("✅ Job created and posts scheduled.")
                 else:
