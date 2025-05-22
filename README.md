@@ -1,2 +1,2 @@
 # AutopostIn
-Automates Content Creation On LinkedIn
+Automates Content Creation on LinkedIn
