@@ -7,7 +7,7 @@ from utils.firebase import save_user
 from dotenv import load_dotenv
 import traceback
 load_dotenv()
-from urllib.parse import quote
+
 linkedin_router = APIRouter()
 
 CLIENT_ID = os.getenv("LINKEDIN_CLIENT_ID")
@@ -29,11 +29,10 @@ async def linkedin_callback(request: Request):
     code = request.query_params.get("code")
     if not code:
         raise HTTPException(status_code=400, detail="Code not found in callback")
-
     try:
         async with httpx.AsyncClient() as client:
-            # Step 1: Exchange code for access token
-            token_response = await client.post(
+            # Exchange code for token
+            token_res = await client.post(
                 "https://www.linkedin.com/oauth/v2/accessToken",
                 data={
                     "grant_type": "authorization_code",
@@ -44,8 +43,7 @@ async def linkedin_callback(request: Request):
                 },
                 headers={"Content-Type": "application/x-www-form-urlencoded"},
             )
-            token_data = token_response.json()
-            print("🔁 LinkedIn token response:", token_data)
+            token_data = token_res.json()
             access_token = token_data.get("access_token")
             if not access_token:
                 raise HTTPException(status_code=400, detail="Failed to get access token")
@@ -72,11 +70,10 @@ async def linkedin_callback(request: Request):
                 "name": name,
                 "urn": urn
             })
-            encoded_name = quote(name)
+
             # Step 4: Redirect to Streamlit with ID
-            return RedirectResponse(url=f"https://autopostin-frontend.onrender.com?user_id={sub}&name={encoded_name}")
+            return RedirectResponse(url=f"https://autopostin-frontend.onrender.com?user_id={sub}")
 
     except Exception as e:
         print("❌ Callback error:", traceback.format_exc())
         raise HTTPException(status_code=500, detail=str(e))
-    
