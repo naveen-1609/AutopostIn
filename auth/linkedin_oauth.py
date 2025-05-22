@@ -74,8 +74,9 @@ async def linkedin_callback(request: Request):
             })
             encoded_name = quote(name)
             # Step 4: Redirect to Streamlit with ID
-            return RedirectResponse(url=f"http://localhost:8501?user_id={sub}&name={encoded_name}")
+            return RedirectResponse(url=f"https://autopostin-frontend.onrender.com?user_id={sub}&name={encoded_name}")
 
     except Exception as e:
         print("❌ Callback error:", traceback.format_exc())
         raise HTTPException(status_code=500, detail=str(e))
+    
