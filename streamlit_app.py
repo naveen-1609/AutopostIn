@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-API_BASE = "http://localhost:5000"
+API_BASE = "https://autopostin.onrender.com"
 
 st.set_page_config(page_title="AutopostIn Dashboard", layout="centered")
 
@@ -19,7 +19,7 @@ if user_id and "user_id" not in st.session_state:
 if "user_id" not in st.session_state or not st.session_state.user_id:
     st.title("AutopostIn")
     st.markdown("### Login using LinkedIn")
-    st.markdown("[Login with LinkedIn](http://localhost:5000/auth/linkedin/login)")
+    st.markdown("[Login with LinkedIn](https://autopostin.onrender.com/auth/linkedin/login)")
     st.stop()
 
 # -------- Sidebar Navigation --------
