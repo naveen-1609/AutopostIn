@@ -14,8 +14,51 @@ app.include_router(jobs_router)
 @app.get("/", response_class=HTMLResponse)
 def home():
     return """
-    <h2>Welcome to AutopostIn 🚀</h2>
-    <a href='/auth/linkedin/login'>Login with LinkedIn</a>
+    <html>
+    <head>
+        <title>Welcome to AutopostIn</title>
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f4f6f8;
+                color: #333;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+            }
+            .container {
+                text-align: center;
+                background-color: white;
+                padding: 40px 60px;
+                border-radius: 10px;
+                box-shadow: 0 0 12px rgba(0,0,0,0.1);
+            }
+            .btn {
+                background-color: #0077b5;
+                color: white;
+                padding: 12px 24px;
+                text-decoration: none;
+                border-radius: 5px;
+                font-weight: bold;
+                display: inline-block;
+                margin-top: 20px;
+                transition: background-color 0.3s ease;
+            }
+            .btn:hover {
+                background-color: #005983;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>🚀 Welcome to <span style="color:#0077b5;">AutopostIn</span></h1>
+            <p>Automate your daily LinkedIn content effortlessly.</p>
+            <a href="/auth/linkedin/login" class="btn">🔐 Login with LinkedIn</a>
+        </div>
+    </body>
+    </html>
     """
 
 @app.get("/dashboard", response_class=HTMLResponse)

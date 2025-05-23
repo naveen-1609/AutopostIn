@@ -7,7 +7,7 @@ st.set_page_config(page_title="AutopostIn Dashboard", layout="centered")
 
 # --------- Session Setup ----------
 query_params = st.query_params
-user_id = query_params.get("user_id", [None])
+user_id = query_params.get("user_id", [None])[0]
 name = query_params.get("name", [""])[0]
 
 if user_id and "user_id" not in st.session_state:
@@ -32,13 +32,13 @@ st.sidebar.markdown(
     <style>
     .logout-button { position: fixed; bottom: 20px; width: 85%; }
     </style>
-    <div class="logout-button">
-        <form action="#">
-            <button onclick="window.location.reload()">🔓 Logout</button>
-        </form>
-    </div>
-    """, unsafe_allow_html=True
+    """,
+    unsafe_allow_html=True,
 )
+
+if st.sidebar.button("🔓 Logout"):
+    st.session_state.clear()
+    st.switch_page("https://autopostin.onrender.com/auth/linkedin/login")
 
 if page == "📝 New Job":
     # -------- New Job Page --------
