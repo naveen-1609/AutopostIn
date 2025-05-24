@@ -15,6 +15,7 @@ jobs_router = APIRouter()
 
 @jobs_router.post("/create")
 def create_job(job: JobRequest):
+    print("🔥 user_id received:", job.user_id)
     user = get_user_by_id(job.user_id)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
