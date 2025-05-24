@@ -7,8 +7,8 @@ st.set_page_config(page_title="AutopostIn Dashboard", layout="centered")
 
 # --------- Session Setup ----------
 query_params = st.query_params
-user_id = query_params.get("user_id", [None])[0]
-name = query_params.get("name", [""])[0]
+user_id = query_params.get("user_id", [None])
+name = query_params.get("name", [""])
 
 if user_id and "user_id" not in st.session_state:
     st.session_state.user_id = user_id
