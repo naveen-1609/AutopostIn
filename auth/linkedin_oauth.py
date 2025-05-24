@@ -7,7 +7,7 @@ from utils.firebase import save_user
 from dotenv import load_dotenv
 import traceback
 load_dotenv()
-
+from urllib.parse import quote
 linkedin_router = APIRouter()
 
 CLIENT_ID = os.getenv("LINKEDIN_CLIENT_ID")
@@ -58,7 +58,7 @@ async def linkedin_callback(request: Request):
 
             sub = userinfo.get("sub")
             name = userinfo.get("name", "LinkedIn User")
-
+            encoded_name = quote(name)
             if not sub:
                 raise HTTPException(status_code=400, detail="User ID (sub) not found in userinfo")
 
@@ -72,7 +72,7 @@ async def linkedin_callback(request: Request):
             })
 
             # Step 4: Redirect to Streamlit with ID
-            return RedirectResponse(url=f"https://autopostin-frontend.onrender.com?user_id={sub}&name={name}")
+            return RedirectResponse(url=f"https://autopostin-frontend.onrender.com?user_id={sub}&name={encoded_name}")
 
     except Exception as e:
         print("❌ Callback error:", traceback.format_exc())
