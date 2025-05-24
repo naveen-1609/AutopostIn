@@ -14,46 +14,49 @@ import pytz
 jobs_router = APIRouter()
 
 @jobs_router.post("/create")
-def create_job(job: JobRequest):
-    print("🔥 user_id received:", job.user_id)
-    user = get_user_by_id(job.user_id)
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
+def create_job(job: dict):
+    print("🔥 Raw job payload:", job)
+    return {"message": "Debug received"}
+# def create_job(job: JobRequest):
+#     print("🔥 user_id received:", job.user_id)
+#     user = get_user_by_id(job.user_id)
+#     if not user:
+#         raise HTTPException(status_code=404, detail="User not found")
 
-    new_york_tz = pytz.timezone("America/New_York")
-    now = datetime.utcnow().replace(tzinfo=pytz.utc).astimezone(new_york_tz)
-    job_posts = []
+#     new_york_tz = pytz.timezone("America/New_York")
+#     now = datetime.utcnow().replace(tzinfo=pytz.utc).astimezone(new_york_tz)
+#     job_posts = []
 
-    for i, post in enumerate(job.posts):
-        post_time = now
-        if job.type == "one time":
-            post_time += timedelta(minutes=5)
-        elif job.type == "daily":
-            post_time += timedelta(days=i)
-        elif job.type == "weekly":
-            post_time += timedelta(weeks=i)
-        elif job.type == "day series":
-            post_time += timedelta(days=i)
-        elif job.type == "roadmap":
-            post_time += timedelta(days=i * 2)
+#     for i, post in enumerate(job.posts):
+#         post_time = now
+#         if job.type == "one time":
+#             post_time += timedelta(minutes=5)
+#         elif job.type == "daily":
+#             post_time += timedelta(days=i)
+#         elif job.type == "weekly":
+#             post_time += timedelta(weeks=i)
+#         elif job.type == "day series":
+#             post_time += timedelta(days=i)
+#         elif job.type == "roadmap":
+#             post_time += timedelta(days=i * 2)
 
-        post["scheduled_time"] = post_time.isoformat()
-        post["status"] = "scheduled"
-        job_posts.append(post)
+#         post["scheduled_time"] = post_time.isoformat()
+#         post["status"] = "scheduled"
+#         job_posts.append(post)
 
-    job_data = {
-        "topic": job.topic,
-        "type": job.type,
-        "created_at": firestore.SERVER_TIMESTAMP,
-        "status": "active",
-        "access_token": user.get("access_token"),
-        "urn": user.get("urn"),
-        "posts": job_posts,
-        "user_id": job.user_id
-    }
+#     job_data = {
+#         "topic": job.topic,
+#         "type": job.type,
+#         "created_at": firestore.SERVER_TIMESTAMP,
+#         "status": "active",
+#         "access_token": user.get("access_token"),
+#         "urn": user.get("urn"),
+#         "posts": job_posts,
+#         "user_id": job.user_id
+#     }
 
-    save_job(job.user_id, job_data)
-    return {"message": "Job created"}
+#     save_job(job.user_id, job_data)
+#     return {"message": "Job created"}
 
 @jobs_router.get("/jobs/{user_id}")
 def list_jobs(user_id: str):
