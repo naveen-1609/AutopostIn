@@ -38,7 +38,11 @@ st.sidebar.markdown(
 
 if st.sidebar.button("🔓 Logout"):
     st.session_state.clear()
-    st.switch_page("https://autopostin.onrender.com/auth/linkedin/login")
+    st.markdown("🔄 Redirecting to login...")
+    st.markdown("""
+        <meta http-equiv="refresh" content="1; url='https://autopostin.onrender.com/auth/linkedin/login'" />
+    """, unsafe_allow_html=True)
+    st.stop()
 
 if page == "📝 New Job":
     # -------- New Job Page --------
