@@ -72,7 +72,7 @@ async def linkedin_callback(request: Request):
             })
 
             # Step 4: Redirect to Streamlit with ID
-            return RedirectResponse(url=f"https://autopostin.onrender.com?user_id={sub}")
+            return RedirectResponse(url=f"https://autopostin-frontend.onrender.com?user_id={sub}")
 
     except Exception as e:
         print("❌ Callback error:", traceback.format_exc())

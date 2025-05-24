@@ -5,8 +5,18 @@ from auth.linkedin_oauth import linkedin_router
 from services.scheduler import start_scheduler
 from fastapi.responses import HTMLResponse
 
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI()
 
+# ✅ Add this CORS setup BEFORE include_router
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://autopostin-frontend.onrender.com"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 app.include_router(linkedin_router)
 app.include_router(posts_router)
 app.include_router(jobs_router)
